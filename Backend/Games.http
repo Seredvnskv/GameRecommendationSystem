@@ -1,0 +1,5 @@
+﻿GET http://localhost:5236/api/v1/games/1042800
+
+###
+
+GET http://localhost:5236/api/v1/games/search?title=dead%20space

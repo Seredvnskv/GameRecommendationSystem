@@ -1,4 +1,5 @@
 using Backend.Data;
+using Backend.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,6 @@ var app = builder.Build();
 app.MigrateDb();
 app.SeedData();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGamesEndpoints();
 
 app.Run();

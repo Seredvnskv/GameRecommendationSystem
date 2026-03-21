@@ -7,6 +7,7 @@ namespace Backend.Data
     public class GameDataLoader
     {
         private readonly GameContext _context;
+        private readonly string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "games.json");
 
         public GameDataLoader(GameContext context)
         {
@@ -14,14 +15,18 @@ namespace Backend.Data
         }
 
         public async Task LoadGames()
-        {
-            string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "games.json");
-            
+        {   
+            if (_context.Games.Any()) 
+            { 
+                Console.WriteLine("Games already exist in the database. Skipping data loading.");
+                return;
+            }
+
             if (!File.Exists(jsonFilePath)) throw new Exception($"JSON file not found at path: {jsonFilePath}");
 
             var json = await File.ReadAllTextAsync(jsonFilePath);
 
-            var gamesData = JsonSerializer.Deserialize<Dictionary<string, GameDto>>(json);
+            var gamesData = JsonSerializer.Deserialize<Dictionary<string, JsonGameDto>>(json);
 
             if (gamesData == null ) throw new InvalidOperationException("Failed to deserialize JSON file");
 
