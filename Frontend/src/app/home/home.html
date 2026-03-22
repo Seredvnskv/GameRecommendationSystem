@@ -1,0 +1,133 @@
+<div class="home-container">
+  <header class="header">
+    <div class="header-content">
+      <h1 class="logo">🎮 GameRec</h1>
+      <p class="tagline">Find Your Next Favorite Game</p>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2 class="hero-title">Discover Amazing Games</h2>
+      <p class="hero-subtitle">Search and get personalized game recommendations</p>
+
+      <div class="search-container">
+        <div class="search-wrapper">
+          <input
+            type="text"
+            class="search-input"
+            placeholder="Search games by title..."
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearch()"
+            (input)="onInputChange()"
+            autocomplete="off"
+          />
+          <button class="search-btn" (click)="onSearch()" [disabled]="isLoading()">
+            @if (!isLoading()) {
+              <span>🔍 Search</span>
+            } @else {
+              <span class="loading-spinner">⏳</span>
+            }
+          </button>
+          @if (searchQuery()) {
+            <button
+              class="clear-btn"
+              (click)="clearSearch()"
+              title="Clear search"
+            >
+              ✕
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  @if (showResults()) {
+    <section class="results-section">
+      <div class="results-container">
+        <h3 class="results-title">
+          Search Results
+          @if (games().length > 0) {
+            <span class="result-count">({{ games().length }})</span>
+          }
+        </h3>
+
+        @if (games().length > 0) {
+          <div class="games-grid">
+            @for (game of games(); track $index) {
+              <div class="game-card">
+                @if (game.headerImage) {
+                  <div class="game-card-image">
+                    <img [src]="game.headerImage" [alt]="game.title" class="game-image"/>
+                  </div>
+                }
+                <div class="game-card-content">
+                  <h4 class="game-title">{{ game.title }}</h4>
+
+                  @if (game.releaseDate) {
+                    <p class="game-info">
+                      📅 {{ game.releaseDate }}
+                    </p>
+                  }
+
+                  @if (game.genres && game.genres.length > 0) {
+                    <p class="game-info">
+                      🎯 {{ game.genres.join(', ') }}
+                    </p>
+                  }
+
+                  @if (game.aboutGame) {
+                    <p class="game-description">
+                      {{ game.aboutGame }}
+                    </p>
+                  }
+
+                  @if (game.metacriticScore && game.metacriticScore > 0) {
+                    <p class="game-info">
+                      ⭐ Score: {{ game.metacriticScore }}/100
+                    </p>
+                  }
+
+                  @if (game.price !== null && game.price !== undefined) {
+                    <p class="game-info">
+                      💵 ${{ game.price }}
+                    </p>
+                  }
+
+                  <button class="view-btn">View Details →</button>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-results">
+            <p>No games found for "{{ searchQuery() }}"</p>
+            <p class="no-results-hint">Try searching with different keywords</p>
+          </div>
+        }
+      </div>
+    </section>
+  } @else {
+    <section class="empty-state">
+      <div class="empty-content">
+        <h3>Welcome to GameRec</h3>
+        <p>Use the search bar above to find games and get recommendations</p>
+        <div class="features">
+          <div class="feature-item">
+            <span class="feature-icon">🔍</span>
+            <span>Advanced Search</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">⭐</span>
+            <span>Get Recommendations</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📊</span>
+            <span>Compare Games</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  }
+</div>
