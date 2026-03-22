@@ -36,6 +36,18 @@ namespace Backend.Data
                 .HasForeignKey(gt => gt.TagId);
 
             modelBuilder.Entity<Game>()
+                .Property(g => g.Developers)
+                .HasConversion(
+                    v => string.Join(',', v),
+                    v => v.Split(',', System.StringSplitOptions.RemoveEmptyEntries).ToList());
+
+            modelBuilder.Entity<Game>()
+                .Property(g => g.Publishers)
+                .HasConversion(
+                    v => string.Join(',', v),
+                    v => v.Split(',', System.StringSplitOptions.RemoveEmptyEntries).ToList());
+
+            modelBuilder.Entity<Game>()
             .Property(g => g.Categories)
             .HasConversion(
                 v => string.Join(',', v),

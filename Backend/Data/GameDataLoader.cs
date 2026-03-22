@@ -1,6 +1,8 @@
 ﻿using Backend.Dtos;
+using Backend.Mapper;
 using Backend.Models;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace Backend.Data
 {
@@ -22,39 +24,38 @@ namespace Backend.Data
                 return;
             }
 
-            if (!File.Exists(jsonFilePath)) throw new Exception($"JSON file not found at path: {jsonFilePath}");
+            if (!File.Exists(jsonFilePath)) 
+                throw new Exception($"JSON file not found at path: {jsonFilePath}");
 
             var json = await File.ReadAllTextAsync(jsonFilePath);
 
             var gamesData = JsonSerializer.Deserialize<Dictionary<string, JsonGameDto>>(json);
 
-            if (gamesData == null ) throw new InvalidOperationException("Failed to deserialize JSON file");
+            if (gamesData == null ) 
+                throw new InvalidOperationException("Failed to deserialize JSON file");
 
+            var addedTitles = new HashSet<string>(); // To prevent adding duplicates
+                                                     
             var addedTags = new HashSet<int>();
 
-            foreach (var (gameId, gameDto) in gamesData)
+            foreach (var (gameId, jsonGameDto) in gamesData)
             {
-                if (_context.Games.Any(g => g.GameId == gameId)) continue;
+                if (_context.Games.Any(g => g.GameId == gameId)) 
+                    continue;
 
-                var game = new Game
-                {
-                    GameId = gameId,
-                    Title = gameDto.Name,
-                    ReleaseDate = gameDto.ReleaseDate,
-                    Price = gameDto.Price,
-                    Description = gameDto.ShortDescription,
-                    HeaderImage = gameDto.HeaderImage,
-                    MetacriticScore = gameDto.MetacriticScore,
-                    PositiveRatings = gameDto.Positive,
-                    NegativeRatings = gameDto.Negative,
-                    Categories = gameDto.Categories,
-                    Genres = gameDto.Genres,
-                    Screenshots = gameDto.Screenshots
-                };
+                var normalizedTitle = NormalizeTitle(jsonGameDto.Name);
+
+                if (addedTitles.Contains(normalizedTitle))
+                    continue;
+
+                var game = GameMapper.MapToGame(gameId, jsonGameDto);
+
+                if (game.MetacriticScore == 0) 
+                    continue;
 
                 var addedGameTags = new HashSet<int>();
 
-                foreach (var (tagName, tagId) in gameDto.Tags!)
+                foreach (var (tagName, tagId) in jsonGameDto.Tags!)
                 {
                     if (addedTags.Add(tagId))
                     {
@@ -68,9 +69,20 @@ namespace Backend.Data
                 }
 
                 _context.Games.Add(game);
+                addedTitles.Add(normalizedTitle);
             }
 
             await _context.SaveChangesAsync();
+            Console.WriteLine("Games data loaded successfully");
+        }
+
+        private string NormalizeTitle(string title) // Remove trademark symbols, hyphens, and whitespace for consistent comparison
+        {
+            return Regex.Replace(
+                title.ToLower().Trim(),
+                @"[™®©\-\s]+",
+                ""
+            );
         }
     }
 }

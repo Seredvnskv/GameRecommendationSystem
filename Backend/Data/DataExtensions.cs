@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Backend.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Data
 {
@@ -13,15 +14,18 @@ namespace Backend.Data
             }
         }
 
-        public static void SeedData(this WebApplication app)
+        public static async Task SeedData(this WebApplication app)
         {
             using (var scope = app.Services.CreateScope())
             {
                 var loader = scope.ServiceProvider.GetRequiredService<GameDataLoader>();
+                var cache = scope.ServiceProvider.GetRequiredService<GameFeaturesCache>();
+                var context = scope.ServiceProvider.GetRequiredService<GameContext>();
+
                 try
                 {
-                    loader.LoadGames().Wait();
-                    Console.WriteLine("Games data loaded successfully");
+                    await loader.LoadGames();
+                    await cache.InitializeAsync(context);
                 }
                 catch (Exception ex)
                 {

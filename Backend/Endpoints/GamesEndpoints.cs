@@ -1,6 +1,7 @@
 ﻿using Backend.Data;
 using Backend.Dtos;
 using Backend.Mapper;
+using Backend.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Endpoints
@@ -9,7 +10,7 @@ namespace Backend.Endpoints
     {
         public static void MapGamesEndpoints(this WebApplication app)
         {
-            var group = app.MapGroup("api/v1/games");
+            var group = app.MapGroup("/api/v1/games");
 
             group.MapGet("/{id}", async (string id, GameContext context) =>
             {
@@ -42,6 +43,17 @@ namespace Backend.Endpoints
 
                 return Results.Ok(
                     GameMapper.MapToGameDtoList(results)
+                );
+            });
+
+            group.MapGet("/{id}/recommendations", async (string id, RecommendationService service) =>
+            {
+                var recommendations = await service.GetSimilarGamesAsync(id);
+
+                if (recommendations.Count == 0) return Results.NotFound("Game not found or no similar games available");
+
+                return Results.Ok(
+                    GameMapper.MapToGameDtoList(recommendations)
                 );
             });
         }

@@ -15,7 +15,13 @@ namespace Backend.Dtos
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
 
-        [JsonPropertyName("short_description")]
+        [property: JsonPropertyName("detailed_description")] 
+        public string Description { get; set; } = string.Empty;
+        
+        [property: JsonPropertyName("about_the_game")] 
+        public string AboutGame { get; set; } = string.Empty;
+        
+        [property: JsonPropertyName("short_description")] 
         public string ShortDescription { get; set; } = string.Empty;
 
         [JsonPropertyName("header_image")]
@@ -29,6 +35,12 @@ namespace Backend.Dtos
 
         [JsonPropertyName("negative")]
         public int Negative { get; set; }
+
+        [JsonPropertyName("developers")]
+        public List<string> Developers { get; set; } = [];
+
+        [JsonPropertyName("publishers")]
+        public List<string> Publishers { get; set; } = [];
 
         [JsonPropertyName("categories")]
         public List<string> Categories { get; set; } = [];
