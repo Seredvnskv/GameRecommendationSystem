@@ -25,6 +25,8 @@ namespace Backend.Services
 
             if (game == null) return new List<Game>();
 
+            var gameVector = _vectorFactory.CreateVector(game);
+
             var allGames = await _context.Games
                 .Include(g => g.GameTags)
                 .ThenInclude(gt => gt.Tag)
@@ -35,7 +37,7 @@ namespace Backend.Services
                 .Select(g => new
                 {
                     Game = g,
-                    Similarity = CalculateSimilarity(game, g, _vectorFactory.CreateVector(game), _vectorFactory.CreateVector(g))
+                    Similarity = CalculateSimilarity(game, g, gameVector, _vectorFactory.CreateVector(g))
                 })
                 .OrderByDescending(x => x.Similarity)
                 .Where(x => x.Similarity > 0)
