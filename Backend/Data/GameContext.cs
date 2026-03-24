@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Backend.Models;
+﻿using Backend.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Backend.Data
 {
@@ -16,54 +18,31 @@ namespace Backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Game>()
-                .HasKey(g => g.GameId);
+            var gameBuilder = modelBuilder.Entity<Game>();
+            gameBuilder.HasKey(g => g.GameId);
+
+            gameBuilder.HasIndex(g => g.Title);
+            gameBuilder.HasIndex(g => g.GameId);
+
+            gameBuilder.Property(g => g.Developers).ListConversion();
+            gameBuilder.Property(g => g.Publishers).ListConversion();
+            gameBuilder.Property(g => g.Categories).ListConversion();
+            gameBuilder.Property(g => g.Genres).ListConversion();
+            gameBuilder.Property(g => g.Screenshots).ListConversion();
 
             modelBuilder.Entity<Tag>()
                 .HasKey(t => t.TagId);
 
-            modelBuilder.Entity<GameTag>()
-                .HasKey(gt => new { gt.GameId, gt.TagId });
+            var gameTagBuilder = modelBuilder.Entity<GameTag>();
+            gameTagBuilder.HasKey(gt => new { gt.GameId, gt.TagId });
 
-            modelBuilder.Entity<GameTag>()
-                .HasOne(gt => gt.Game)
+            gameTagBuilder.HasOne(gt => gt.Game)
                 .WithMany(g => g.GameTags)
                 .HasForeignKey(gt => gt.GameId);
 
-            modelBuilder.Entity<GameTag>()
-                .HasOne(gt => gt.Tag)
+            gameTagBuilder.HasOne(gt => gt.Tag)
                 .WithMany(t => t.GameTags)
                 .HasForeignKey(gt => gt.TagId);
-
-            modelBuilder.Entity<Game>()
-                .Property(g => g.Developers)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', System.StringSplitOptions.RemoveEmptyEntries).ToList());
-
-            modelBuilder.Entity<Game>()
-                .Property(g => g.Publishers)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', System.StringSplitOptions.RemoveEmptyEntries).ToList());
-
-            modelBuilder.Entity<Game>()
-            .Property(g => g.Categories)
-            .HasConversion(
-                v => string.Join(',', v),
-                v => v.Split(',', System.StringSplitOptions.RemoveEmptyEntries).ToList());
-
-            modelBuilder.Entity<Game>()
-                .Property(g => g.Genres)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', System.StringSplitOptions.RemoveEmptyEntries).ToList());
-
-            modelBuilder.Entity<Game>()
-                .Property(g => g.Screenshots)
-                .HasConversion(
-                    v => string.Join(',', v),
-                    v => v.Split(',', System.StringSplitOptions.RemoveEmptyEntries).ToList());
         }
     }
 }
