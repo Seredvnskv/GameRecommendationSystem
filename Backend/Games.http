@@ -2,7 +2,7 @@
 
 ###
 
-GET http://localhost:5236/api/v1/games/search?title=dead%20space
+GET http://localhost:5236/api/v1/games/search?title=Dark%20Souls
 
 ###
 

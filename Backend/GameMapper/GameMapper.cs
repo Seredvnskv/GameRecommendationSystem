@@ -12,6 +12,8 @@ namespace Backend.Mapper
                 game.Title,
                 game.ReleaseDate,
                 game.AboutGame,
+                game.ShortDescription,
+                game.Description,
                 game.Price,
                 game.HeaderImage,
                 game.MetacriticScore,

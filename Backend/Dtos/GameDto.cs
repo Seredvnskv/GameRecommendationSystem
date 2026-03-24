@@ -5,6 +5,8 @@
         string Title,
         string ReleaseDate,
         string AboutGame,
+        string ShortDescription,
+        string Description,
         decimal Price,
         string HeaderImage,
         int MetacriticScore,
