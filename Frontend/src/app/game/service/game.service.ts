@@ -9,23 +9,23 @@ import { Observable } from "rxjs";
 export class GameService {
   constructor(private http: HttpClient) {}
 
-  GetGames(): Observable<GameDto[]>
+  getGames(): Observable<GameDto[]>
   {
     return this.http.get<GameDto[]>(`/api/games`);
   }
 
-  GetGameById(id: string): Observable<GameDto>
+  getGameById(id: string): Observable<GameDto>
   {
     return this.http.get<GameDto>(`/api/games/${id}`);
   }
 
-  GetGamesByTitle(title: string): Observable<GameDto[]>
+  getGamesByTitle(title: string): Observable<GameDto[]>
   {
     return this.http.get<GameDto[]>(`/api/games/search?title=${title}`);
   }
 
-  GetRecommendedGames(id: string): Observable<GameDto[]>
+  getRecommendedGames(id: string): Observable<GameDto[]>
   {
-    return this.http.get<GameDto[]>(`/api/games/${id}`);
+    return this.http.get<GameDto[]>(`/api/games/${id}/recommendations`);
   }
 }

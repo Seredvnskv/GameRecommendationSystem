@@ -1,13 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { GameService } from '../game/service/game.service';
-import { GameDto } from '../game/dto/game.dto';
+import { GameService } from '../service/game.service';
+import { GameDto } from '../dto/game.dto';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -21,6 +22,7 @@ export class HomeComponent {
 
   onSearch(): void {
     const query = this.searchQuery().trim();
+
     if (query.length === 0) {
       this.showResults.set(false);
       return;
@@ -28,7 +30,7 @@ export class HomeComponent {
 
     this.isLoading.set(true);
 
-    this.gameService.GetGamesByTitle(query).subscribe({
+    this.gameService.getGamesByTitle(query).subscribe({
       next: (data) => {
         //console.log('Games received:', data);
 

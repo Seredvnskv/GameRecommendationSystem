@@ -1,7 +1,7 @@
 <div class="home-container">
   <header class="header">
     <div class="header-content">
-      <h1 class="logo">🎮 GameRec</h1>
+      <h1 class="logo">🎮 GameRank</h1>
       <p class="tagline">Find Your Next Favorite Game</p>
     </div>
   </header>
@@ -24,7 +24,7 @@
           />
           <button class="search-btn" (click)="onSearch()" [disabled]="isLoading()">
             @if (!isLoading()) {
-              <span>🔍 Search</span>
+              <span>Search</span>
             } @else {
               <span class="loading-spinner">⏳</span>
             }
@@ -67,13 +67,13 @@
 
                   @if (game.releaseDate) {
                     <p class="game-info">
-                      📅 {{ game.releaseDate }}
+                      {{ game.releaseDate }}
                     </p>
                   }
 
                   @if (game.genres && game.genres.length > 0) {
                     <p class="game-info">
-                      🎯 {{ game.genres.join(', ') }}
+                      {{ game.genres.join(', ') }}
                     </p>
                   }
 
@@ -85,17 +85,19 @@
 
                   @if (game.metacriticScore && game.metacriticScore > 0) {
                     <p class="game-info">
-                      ⭐ Score: {{ game.metacriticScore }}/100
+                      Score: {{ game.metacriticScore }}/100
                     </p>
                   }
 
                   @if (game.price !== null && game.price !== undefined) {
                     <p class="game-info">
-                      💵 ${{ game.price }}
+                      ${{ game.price }}
                     </p>
                   }
 
-                  <button class="view-btn">View Details →</button>
+                  <button class="view-btn" [routerLink]="['game', game.gameId]">
+                    View Details →
+                  </button>
                 </div>
               </div>
             }
@@ -111,19 +113,16 @@
   } @else {
     <section class="empty-state">
       <div class="empty-content">
-        <h3>Welcome to GameRec</h3>
+        <h3>Welcome to GameRank</h3>
         <p>Use the search bar above to find games and get recommendations</p>
         <div class="features">
           <div class="feature-item">
-            <span class="feature-icon">🔍</span>
             <span>Advanced Search</span>
           </div>
           <div class="feature-item">
-            <span class="feature-icon">⭐</span>
             <span>Get Recommendations</span>
           </div>
           <div class="feature-item">
-            <span class="feature-icon">📊</span>
             <span>Compare Games</span>
           </div>
         </div>

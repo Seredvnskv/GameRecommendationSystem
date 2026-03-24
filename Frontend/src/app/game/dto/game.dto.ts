@@ -3,6 +3,8 @@ export interface GameDto {
   title: string;
   releaseDate: string;
   aboutGame: string;
+  shortDescription: string;
+  description: string;
   price: number;
   headerImage: string;
   metacriticScore: number;

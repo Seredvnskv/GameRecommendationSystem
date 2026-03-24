@@ -1,0 +1,40 @@
+<div class="carousel-container">
+  @if (screenshots.length > 0) {
+    <div class="carousel-wrapper">
+      <div class="carousel-main">
+        <img
+          [src]="screenshots[currentIndex]"
+          [alt]="'Screenshot ' + (currentIndex + 1)"
+          class="carousel-image"
+        />
+      </div>
+
+      @if (screenshots.length > 1) {
+        <div class="carousel-thumbnails">
+          @for (screenshot of screenshots; track $index) {
+            <button
+              class="thumbnail"
+              [class.active]="$index === currentIndex"
+              (click)="goToSlide($index)"
+              [attr.aria-label]="'Go to screenshot ' + ($index + 1)"
+            >
+              <img [src]="screenshot" [alt]="'Thumbnail ' + ($index + 1)" />
+            </button>
+          }
+        </div>
+
+        <div class="carousel-indicators">
+          @for (i of screenshots; track $index) {
+            <button
+              class="indicator"
+              [class.active]="$index === currentIndex"
+              (click)="goToSlide($index)"
+              [attr.aria-label]="'Go to screenshot ' + ($index + 1)"
+            ></button>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>
+

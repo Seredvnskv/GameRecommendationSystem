@@ -1,0 +1,68 @@
+@if (game(); as game) {
+  <div class="game-container">
+    <div class="game-content-wrapper">
+      <div class="game-left-column">
+        <div class="game-info-card">
+          <div class="game-card-image">
+            <img [src]="game.headerImage" [alt]="game.title" class="game-header-image" />
+          </div>
+
+          <h1 class="game-title">{{ game.title }}</h1>
+
+          @if (game.releaseDate) {
+            <div class="info-row">
+              <span class="info-label">Release Date:</span>
+              <span class="info-value">{{ game.releaseDate }}</span>
+            </div>
+          }
+
+          <div class="info-row">
+            <span class="info-label">Price:</span>
+            <span class="info-value price-tag">{{game.price | currency}}</span>
+          </div>
+
+          @if (game.metacriticScore && game.metacriticScore > 0) {
+            <div class="info-row">
+              <span class="info-label">Metacritic:</span>
+              <span class="info-value score-tag">{{ game.metacriticScore }}/100</span>
+            </div>
+          }
+
+          @if (game.genres && game.genres.length > 0) {
+            <div class="genres-section">
+              <span class="info-label">Genres:</span>
+              <div class="genres-container">
+                @for (genre of game.genres; track $index) {
+                  <span class="genre-tag">{{ genre }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          @if (game.shortDescription) {
+            <div class="short-description">
+              <p>{{ game.shortDescription }}</p>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="game-right-column">
+        @if (game.screenshots && game.screenshots.length > 0) {
+          <div class="screenshots-section">
+            <app-game-carousel [screenshots]="game.screenshots"></app-game-carousel>
+          </div>
+        }
+
+        @if (game.description) {
+          <div class="full-description-section">
+            <h2 class="section-title">About This Game</h2>
+            <p class="full-description">{{ game.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
+
+
