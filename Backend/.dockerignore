@@ -1,0 +1,11 @@
+bin/
+obj/
+*.user
+*.suo
+*.sln
+.git/
+.gitignore
+.vs/
+games.db
+games.json
+appsettings.Development.json
