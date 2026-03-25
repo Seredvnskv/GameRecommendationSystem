@@ -1,0 +1,10 @@
+<div class="carousel-container">
+  @if (games.length > 0)
+  {
+    <div class="carousel-wrapper">
+      <button class="carousel-btn" (click)="prevSlide()">←</button>
+      <app-game-card [game]="games[currentIndex]"></app-game-card>
+      <button class="carousel-btn" (click)="nextSlide()">→</button>
+    </div>
+  }
+</div>

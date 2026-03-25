@@ -1,7 +1,7 @@
 .game-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  color: #e0e0e0;
+  background: linear-gradient(135deg, rgba(245, 245, 245, 0.98), rgba(240, 240, 240, 0.98));
+  color: #333333;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 1.5rem 0;
   overflow-x: hidden;
@@ -21,15 +21,18 @@
 
 .game-left-column {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .game-info-card {
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.1), rgba(0, 212, 255, 0.05));
-  border: 1px solid rgba(147, 112, 219, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 248, 248, 0.95));
+  border: 1px solid rgba(180, 180, 180, 0.4);
   border-radius: 15px;
   overflow: hidden;
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px rgba(147, 112, 219, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   animation: slideInLeft 0.6s ease-out;
   position: sticky;
   top: 1rem;
@@ -75,7 +78,7 @@
   font-weight: 800;
   margin: 0;
   padding: 1.2rem 1.2rem 0.8rem 1.2rem;
-  background: linear-gradient(135deg, #9370db, #00d4ff);
+  background: linear-gradient(135deg, #555555, #999999);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -90,7 +93,7 @@
   gap: 0.4rem;
   padding: 0.8rem 1.2rem;
   margin: 0;
-  border-bottom: 1px solid rgba(147, 112, 219, 0.2);
+  border-bottom: 1px solid rgba(200, 200, 200, 0.5);
 }
 
 .info-row:last-of-type {
@@ -99,14 +102,14 @@
 
 .info-label {
   font-weight: 600;
-  color: #a0a0a0;
+  color: #666666;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .info-value {
-  color: #e0e0e0;
+  color: #333333;
   font-weight: 500;
   font-size: 0.9rem;
 }
@@ -114,25 +117,41 @@
 .price-tag {
   font-size: 1.2rem;
   font-weight: 800;
-  color: #00d4ff;
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.2), rgba(0, 212, 255, 0.2));
+  color: #666666;
+  background: linear-gradient(135deg, rgba(220, 220, 220, 0.6), rgba(240, 240, 240, 0.5));
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
 }
 
-.score-tag {
+.metacritic-score {
   font-size: 1rem;
   font-weight: 700;
-  color: #ffd700;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 255, 0, 0.1));
   padding: 0.4rem 0.8rem;
   border-radius: 6px;
+}
+
+.metacritic-score.positive {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.8), rgba(56, 142, 60, 0.9));
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+}
+
+.metacritic-score.neutral {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.8), rgba(245, 127, 23, 0.9));
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.4);
+}
+
+.metacritic-score.negative {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(244, 67, 54, 0.8), rgba(211, 47, 47, 0.9));
+  box-shadow: 0 0 10px rgba(244, 67, 54, 0.4);
 }
 
 .genres-section {
   padding: 0.8rem 1.2rem;
   margin: 0;
-  border-bottom: 1px solid rgba(147, 112, 219, 0.2);
+  border-bottom: 1px solid rgba(200, 200, 200, 0.5);
 }
 
 .genres-section .info-label {
@@ -149,10 +168,10 @@
 
 .genre-tag {
   font-size: 0.75rem;
-  color: #00d4ff;
+  color: #666666;
   padding: 0.35rem 0.75rem;
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.3), rgba(0, 212, 255, 0.2));
-  border: 1px solid rgba(147, 112, 219, 0.5);
+  background: linear-gradient(135deg, rgba(220, 220, 220, 0.7), rgba(235, 235, 235, 0.6));
+  border: 1px solid rgba(150, 150, 150, 0.5);
   border-radius: 16px;
   display: inline-flex;
   align-items: center;
@@ -162,10 +181,10 @@
 }
 
 .genre-tag:hover {
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.4), rgba(0, 212, 255, 0.3));
-  border-color: #00d4ff;
+  background: linear-gradient(135deg, rgba(200, 200, 200, 0.8), rgba(220, 220, 220, 0.7));
+  border-color: #666666;
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(147, 112, 219, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .short-description {
@@ -179,12 +198,124 @@
 .short-description p {
   margin: 0;
   padding: 0;
-  color: #b0b0b0;
+  color: #555555;
   font-size: 0.85rem;
   line-height: 1.5;
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+.game-buttons {
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem 1.2rem;
+  margin-top: auto;
+}
+
+.action-button {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(135deg, #888888, #666666);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(100, 100, 100, 0.3);
+}
+
+.action-button:active {
+  transform: translateY(0);
+}
+
+.game-recommendations-section {
+  background: linear-gradient(135deg, rgba(245, 245, 245, 0.8), rgba(250, 250, 250, 0.8));
+  border: 1px solid rgba(180, 180, 180, 0.4);
+  border-radius: 15px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  animation: slideInUp 0.6s ease-out;
+  width: 100%;
+  overflow: hidden;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  gap: 1rem;
+  min-height: 200px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(150, 150, 150, 0.2);
+  border-top-color: #666666;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #666666;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.no-recommendations {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  min-height: 150px;
+}
+
+.no-data-text {
+  color: #999999;
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.3px;
 }
 
 .game-right-column {
@@ -208,24 +339,24 @@
 }
 
 .screenshots-section {
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.1), rgba(0, 212, 255, 0.05));
-  border: 1px solid rgba(147, 112, 219, 0.3);
+  background: linear-gradient(135deg, rgba(245, 245, 245, 0.8), rgba(250, 250, 250, 0.8));
+  border: 1px solid rgba(180, 180, 180, 0.4);
   border-radius: 15px;
   padding: 1.2rem;
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px rgba(147, 112, 219, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-width: 100%;
   overflow: hidden;
 }
 
 .full-description-section {
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.1), rgba(0, 212, 255, 0.05));
-  border: 1px solid rgba(147, 112, 219, 0.3);
+  background: linear-gradient(135deg, rgba(245, 245, 245, 0.8), rgba(250, 250, 250, 0.8));
+  border: 1px solid rgba(180, 180, 180, 0.4);
   border-radius: 15px;
   padding: 1.5rem;
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px rgba(147, 112, 219, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-width: 100%;
   overflow: hidden;
@@ -235,63 +366,18 @@
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0 0 1rem 0;
-  color: #00d4ff;
+  color: #555555;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .full-description {
-  color: #b0b0b0;
+  color: #444444;
   line-height: 1.8;
   font-size: 0.95rem;
   margin: 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.screenshots-section {
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.1), rgba(0, 212, 255, 0.05));
-  border: 1px solid rgba(147, 112, 219, 0.3);
-  border-radius: 15px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px rgba(147, 112, 219, 0.2);
-}
-
-.full-description-section {
-  background: linear-gradient(135deg, rgba(147, 112, 219, 0.1), rgba(0, 212, 255, 0.05));
-  border: 1px solid rgba(147, 112, 219, 0.3);
-  border-radius: 15px;
-  padding: 2rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px rgba(147, 112, 219, 0.2);
-}
-
-.section-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  color: #00d4ff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.full-description {
-  color: #b0b0b0;
-  line-height: 1.8;
-  font-size: 0.95rem;
-  margin: 0;
 }
 
 @media (max-width: 1024px) {
@@ -304,6 +390,10 @@
   .game-info-card {
     position: static;
     max-width: 100%;
+  }
+
+  .game-recommendations-section {
+    padding: 1.2rem;
   }
 }
 
@@ -383,6 +473,10 @@
     padding: 1rem;
   }
 
+  .game-recommendations-section {
+    padding: 1rem;
+  }
+
   .section-title {
     font-size: 1.2rem;
     margin-bottom: 0.8rem;
@@ -390,6 +484,31 @@
 
   .full-description {
     font-size: 0.85rem;
+  }
+
+  .loading-container {
+    padding: 2rem 1rem;
+    min-height: 150px;
+    gap: 0.8rem;
+  }
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border-width: 3px;
+  }
+
+  .loading-text {
+    font-size: 0.9rem;
+  }
+
+  .no-recommendations {
+    padding: 1.8rem 1rem;
+    min-height: 120px;
+  }
+
+  .no-data-text {
+    font-size: 0.95rem;
   }
 }
 
@@ -454,6 +573,10 @@
     padding: 0.75rem;
   }
 
+  .game-recommendations-section {
+    padding: 0.75rem;
+  }
+
   .section-title {
     font-size: 1rem;
     margin-bottom: 0.6rem;
@@ -461,5 +584,30 @@
 
   .full-description {
     font-size: 0.75rem;
+  }
+
+  .loading-container {
+    padding: 1.5rem 1rem;
+    min-height: 130px;
+    gap: 0.6rem;
+  }
+
+  .spinner {
+    width: 35px;
+    height: 35px;
+    border-width: 3px;
+  }
+
+  .loading-text {
+    font-size: 0.85rem;
+  }
+
+  .no-recommendations {
+    padding: 1.5rem 1rem;
+    min-height: 100px;
+  }
+
+  .no-data-text {
+    font-size: 0.9rem;
   }
 }

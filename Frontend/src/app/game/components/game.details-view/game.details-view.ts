@@ -3,13 +3,15 @@ import { GameDto } from '../../dto/game.dto';
 import { GameService } from '../../service/game.service';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import { GameCarouselComponent } from '../game-carousel/game-carousel';
+import { GameCarouselComponent } from '../image-carousel/image-carousel';
+import {GameCardCarousel} from '../game.card-carousel/game.card-carousel';
 
 @Component({
   selector: 'app-game.details-view',
   imports: [
     CommonModule,
-    GameCarouselComponent
+    GameCarouselComponent,
+    GameCardCarousel
   ],
   templateUrl: './game.details-view.html',
   styleUrl: './game.details-view.css',
@@ -24,25 +26,31 @@ export class GameDetailsView implements OnInit
   id = signal<string>('');
   recommendedGames = signal<GameDto[]>([]);
   isLoading = signal(false);
+  clicked = signal(false);
 
   ngOnInit(): void {
-    this.id.set(this.route.snapshot.params['id']);
+    this.route.params.subscribe(params => {
+      this.id.set(params['id']);
 
-    this.gameService.getGameById(this.id()).subscribe(game =>
-    {
-      this.game.set(game);
-      this.screenshots.set(game.screenshots);
+      this.gameService.getGameById(this.id()).subscribe(game =>
+      {
+        this.game.set(game);
+        this.screenshots.set(game.screenshots);
+        this.clicked = signal(false);
+      });
     });
   }
 
   goBack(): void
   {
     this.router.navigate(['/']);
+    this.clicked = signal(false);
   }
 
   getRecommendedGames(): void
   {
     this.isLoading.set(true);
+    this.clicked = signal(true);
 
     this.gameService.getRecommendedGames(this.id()).subscribe(
       {

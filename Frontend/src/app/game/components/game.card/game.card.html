@@ -1,0 +1,30 @@
+@if (game) {
+  <div class="game-card-container" (click)="onClick()">
+    @if (game.headerImage) {
+      <div class="game-card-image">
+        <img [src]="game.headerImage" [alt]="game.title" class="game-image"/>
+      </div>
+    }
+    <div class="game-card-content">
+      <h4 class="game-title">{{ game.title }}</h4>
+
+      @if (game.releaseDate) {
+        <p class="game-info">
+          {{ game.releaseDate }}
+        </p>
+      }
+
+      @if (game.genres && game.genres.length > 0) {
+        <p class="game-info">
+          {{ game.genres.join(', ') }}
+        </p>
+      }
+
+      @if (game.metacriticScore && game.metacriticScore > 0) {
+        <p class="game-info">
+          Score: {{ game.metacriticScore }}/100
+        </p>
+      }
+    </div>
+  </div>
+}

@@ -24,7 +24,13 @@
           @if (game.metacriticScore && game.metacriticScore > 0) {
             <div class="info-row">
               <span class="info-label">Metacritic:</span>
-              <span class="info-value score-tag">{{ game.metacriticScore }}/100</span>
+              @if (game.metacriticScore >= 80) {
+                <span class="info-value metacritic-score positive">{{ game.metacriticScore }}/100</span>
+              } @else if (game.metacriticScore >= 50) {
+                <span class="info-value metacritic-score neutral">{{ game.metacriticScore }}/100</span>
+              } @else {
+                <span class="info-value metacritic-score negative">{{ game.metacriticScore }}/100</span>
+              }
             </div>
           }
 
@@ -44,7 +50,41 @@
               <p>{{ game.shortDescription }}</p>
             </div>
           }
+
+          <div class="game-buttons">
+            <button class="action-button go-back"
+                    (click)="goBack()">
+              Back
+            </button>
+
+            <button class="action-button get-recommendations"
+                    (click)="getRecommendedGames()">
+              Recommendations
+            </button>
+          </div>
         </div>
+
+        @if (this.clicked())
+        {
+          <div class="game-recommendations-section">
+            @if (isLoading())
+            {
+              <div class="loading-container">
+                <div class="spinner"></div>
+                <p class="loading-text">Fetching recommendations...</p>
+              </div>
+            } @else if (recommendedGames().length > 0)
+            {
+              <h2 class="section-title">Recommended Games</h2>
+              <app-game-card-carousel [games]="recommendedGames()"></app-game-card-carousel>
+            } @else
+            {
+              <div class="no-recommendations">
+                <p class="no-data-text">No recommendations available at the moment.</p>
+              </div>
+            }
+          </div>
+        }
       </div>
 
       <div class="game-right-column">
