@@ -1,6 +1,6 @@
 # Game Recommendation System
 
-A full-stack web application that provides personalized game recommendations based on user preferences and search criteria.
+A full-stack web application that helps you find next game you should play!
 
 ## Data Source
 
