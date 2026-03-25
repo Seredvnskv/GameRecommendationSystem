@@ -12,7 +12,7 @@ The dataset includes game information such as titles, descriptions, tags, rating
 
 - **Game Search**: Search and filter games by title, tags, and characteristics
 - **Recommendations**: Get personalized game recommendations based on your interests
-- **Game Details**: View detailed information about games including descriptions and tags
+- **Game Details**: View detailed information about games including descriptions and genres
 - **Responsive UI**: Modern Angular-based interface with smooth browsing experience
 
 ## Screenshots
